@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LuncPrime LCPIE</title>
+<style>
+:root{
+  --bg:#030711;--panel:#07111f;--panel2:#0a1728;--gold:#f6bd33;--gold2:#ffe27a;--text:#f4f7fb;--muted:#aab6c4;--line:rgba(246,189,51,.35);--soft:rgba(255,255,255,.06);--cyan:#00eaff;--danger:#ff667a;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 85% 45%,rgba(246,189,51,.14),transparent 26%),radial-gradient(circle at 18% 12%,rgba(0,234,255,.12),transparent 28%),linear-gradient(180deg,#02050d,#07101d 55%,#030711);color:var(--text);min-height:100vh;padding:18px}
+.wrapper{width:min(1480px,100%);margin:auto;min-height:calc(100vh - 36px);border:1px solid var(--line);border-radius:24px;background:rgba(3,8,17,.78);box-shadow:0 0 50px rgba(246,189,51,.12), inset 0 0 90px rgba(0,0,0,.45);padding:26px;display:grid;grid-template-columns:380px 1fr;gap:24px;position:relative;overflow:hidden}
+.wrapper:after{content:"";position:absolute;right:-120px;bottom:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,226,122,.35),rgba(29,76,112,.14) 38%,transparent 68%);opacity:.55;pointer-events:none}
+.left,.main{position:relative;z-index:1}.left{border-right:1px solid rgba(255,255,255,.08);padding-right:24px;display:flex;flex-direction:column;gap:20px}
+.language-switcher{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}.lang-btn img{width:18px;height:12px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.lang-btn{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.045);color:var(--text);border-radius:999px;padding:8px 10px;font-weight:800;cursor:pointer;font-size:13px}.lang-btn.active{border-color:var(--gold2);box-shadow:0 0 18px rgba(246,189,51,.22);color:var(--gold2)}
+.logo-wrap{text-align:center;padding-top:6px}.logo-img{width:260px;max-width:100%;border-radius:50%;filter:drop-shadow(0 0 32px rgba(246,189,51,.45))}
+h1{margin:14px 0 4px;font-size:48px;line-height:.95;letter-spacing:-2px;text-transform:uppercase}h1 span{color:var(--gold)}
+.tagline{color:var(--gold2);font-weight:800;letter-spacing:.8px;text-transform:uppercase;font-size:14px}.desc{color:var(--muted);line-height:1.65;font-size:15px;margin:12px 0 0}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mini{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(255,255,255,.035);font-size:13px;font-weight:800;display:flex;gap:9px;align-items:center}
+.wallet-card{margin-top:auto;border:1px solid var(--line);border-radius:16px;padding:18px;background:linear-gradient(135deg,rgba(246,189,51,.08),rgba(255,255,255,.03))}.wallet-card h3,.panel h2{margin:0 0 12px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
+.btn{margin-top:12px;width:100%;border:1px solid var(--gold2);background:linear-gradient(180deg,#ffe27a,#b97805);color:#090b0f;padding:14px 16px;border-radius:14px;font-weight:950;letter-spacing:.5px;cursor:pointer;box-shadow:0 0 28px rgba(246,189,51,.25)}
+.main{display:flex;flex-direction:column;gap:18px}.top-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{border:1px solid rgba(255,255,255,.1);border-radius:14px;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));padding:16px;min-height:88px}.stat small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-size:12px}.stat strong{font-size:21px;color:var(--text);word-break:break-word}
+.panel{border:1px solid rgba(246,189,51,.28);border-radius:16px;background:rgba(7,17,31,.78);padding:20px;box-shadow:inset 0 0 38px rgba(0,0,0,.16)}.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.info-row{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:8px 0;color:var(--muted)}.info-row strong{color:var(--text);font-weight:700;word-break:break-word}.contract{margin-top:8px;color:var(--gold2)!important;background:rgba(0,0,0,.25);border:1px solid rgba(246,189,51,.35);border-radius:10px;padding:10px;font-size:13px}
+ul{margin:0;padding:0;list-style:none;display:grid;gap:13px;color:var(--text)}li{display:flex;gap:10px;align-items:flex-start;color:#edf2f7;line-height:1.45}li:before{content:"✓";color:#111;background:var(--gold2);border-radius:50%;width:18px;height:18px;display:inline-grid;place-items:center;font-size:12px;font-weight:900;flex:0 0 18px;margin-top:1px}
+.use-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center}.use{border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:16px 10px;background:rgba(255,255,255,.035);color:var(--muted);font-size:13px}.use b{display:block;color:var(--gold2);font-size:24px;margin-bottom:7px}
+.owner-panel{background:linear-gradient(135deg,rgba(246,189,51,.09),rgba(7,17,31,.82))}.owner-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px}.owner-percent{font-size:30px;font-weight:950;color:var(--gold2);text-shadow:0 0 18px rgba(246,189,51,.35)}.owner-bar{height:20px;background:rgba(255,255,255,.08);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}.owner-fill{width:0%;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 0 14px rgba(246,189,51,.7);transition:width 1s ease}.owner-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.owner-meta div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px;color:var(--muted);font-size:12px}.owner-meta strong{display:block;color:var(--text);font-size:14px;margin-top:4px;word-break:break-word}.status{font-size:12px;color:var(--muted);margin-top:10px}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.badge{border:1px solid rgba(0,234,255,.25);padding:8px 10px;border-radius:10px;color:var(--text);font-size:12px;background:rgba(0,234,255,.05)}
+.infographic-stage{position:relative;min-height:210px;display:grid;place-items:center;overflow:hidden}.info-card{position:absolute;inset:20px;opacity:0;transform:translateY(18px) scale(.96);pointer-events:none;transition:opacity .65s ease, transform .65s ease;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(246,189,51,.12),rgba(255,255,255,.035));padding:18px;box-shadow:0 0 28px rgba(246,189,51,.12)}.info-card.active{opacity:1;transform:translateY(0) scale(1)}.info-card h3{margin:0 0 12px;color:var(--gold2);font-size:22px}.info-card .number{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:900}
+.footer{margin-top:2px;border-top:1px solid rgba(255,255,255,.1);padding-top:14px;text-align:center;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+@media(max-width:1050px){.wrapper{grid-template-columns:1fr}.left{border-right:0;border-bottom:1px solid rgba(255,255,255,.08);padding-right:0;padding-bottom:20px}.top-row,.content-grid,.bottom-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){body{padding:10px}.wrapper{padding:16px;border-radius:18px}.top-row,.content-grid,.bottom-grid,.use-grid,.owner-meta{grid-template-columns:1fr}h1{font-size:38px}.logo-img{width:210px}.info-row{grid-template-columns:1fr}.left{text-align:left}.logo-wrap{text-align:center}.owner-head{align-items:flex-start;flex-direction:column}.info-card{inset:10px}.infographic-stage{min-height:260px}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <aside class="left">
+    <div class="language-switcher" aria-label="Language selection">
+      <button class="lang-btn active" type="button" data-lang="en"><img src="https://flagcdn.com/w20/gb.png"> EN</button>
+      <button class="lang-btn" type="button" data-lang="de"><img src="https://flagcdn.com/w20/de.png"> DE</button>
+      <button class="lang-btn" type="button" data-lang="fr"><img src="https://flagcdn.com/w20/fr.png"> FR</button>
+      <button class="lang-btn" type="button" data-lang="es"><img src="https://flagcdn.com/w20/es.png"> ES</button>
+      <button class="lang-btn" type="button" data-lang="it"><img src="https://flagcdn.com/w20/it.png"> IT</button>
+    </div>
+
+    <div class="logo-wrap">
+      <img class="logo-img" src="https://i.postimg.cc/KvkYmKh2/Lunc-Prime-Logo-mit-leuchtendem-Play-Button.png" alt="LuncPrime Logo" />
+      <h1>Lunc<span>Prime</span></h1>
+      <div class="tagline" data-i18n="tagline">Premium Media · Real Utility · Community Powered</div>
+      <p class="desc" data-i18n="intro">LuncPrime (LCPIE) is the premium gateway for exclusive content, digital media projects and community experiences on the Terra Classic blockchain.</p>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted)">
+        to find on <span style="color:var(--cyan)">Garuda</span> and <span style="color:var(--gold2)">Vyntrex</span>
+      </div>
+    </div>
+
+    <div class="mini-grid">
+      <div class="mini">👥 <span data-i18n="miniCommunity">Community Focus</span></div>
+      <div class="mini">🛡️ <span data-i18n="miniTransparent">Transparent</span></div>
+      <div class="mini">🚀 Terra Classic</div>
+      <div class="mini">🎬 <span data-i18n="miniMedia">Media Utility</span></div>
+    </div>
+
+    <div class="wallet-card">
+      <h3 data-i18n="walletTitle">Connect Wallet</h3>
+      <p class="desc" data-i18n="walletDesc">Connect your Terra Classic wallet and check your LuncPrime balance later.</p>
+      <button class="btn" type="button" data-i18n="walletButton">Wallet Connect</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-row">
+      <div class="stat"><small data-i18n="statSymbol">Token Symbol</small><strong>LCPIE</strong></div>
+      <div class="stat"><small data-i18n="statNetwork">Network</small><strong>Terra Classic</strong></div>
+      <div class="stat"><small data-i18n="statSupply">Total Supply</small><strong>1,000,000 LCPIE</strong></div>
+      <div class="stat"><small data-i18n="statPool">Pool Supply</small><strong id="poolSupply">Loading...</strong></div>
+    </div>
+
+    <section class="panel owner-panel" id="ownerPanel">
+      <div class="owner-head">
+        <h2 data-i18n="ownerTitle">Owner Share</h2>
+        <div class="owner-percent" id="ownerPercent">Loading...</div>
+      </div>
+      <div class="owner-bar" aria-label="Owner share percentage bar"><div class="owner-fill" id="ownerFill"></div></div>
+      <div class="owner-meta">
+        <div><span data-i18n="ownerBalanceLabel">Owner Balance</span><strong id="ownerBalance">Live query</strong></div>
+        <div><span data-i18n="ownerGoalLabel">Goal</span><strong>&lt; 10%</strong></div>
+      </div>
+      <p class="status" id="ownerStatus" data-status="connecting">Connecting to Terra Classic...</p>
+    </section>
+
+    <div class="content-grid">
+      <section class="panel">
+        <h2 data-i18n="tokenInfoTitle">Token Information</h2>
+        <div class="info-row"><span data-i18n="tokenNameLabel">Token Name</span><strong>LuncPrime</strong></div>
+        <div class="info-row"><span data-i18n="symbolLabel">Symbol</span><strong>LCPIE</strong></div>
+        <div class="info-row"><span data-i18n="networkLabel">Network</span><strong>Terra Classic (LUNC)</strong></div>
+        <div class="info-row"><span data-i18n="standardLabel">Standard</span><strong>CW20</strong></div>
+        <div class="info-row"><span data-i18n="contractLabel">Contract</span><strong class="contract">terra1lz6lnuk64hrcx8t2qgs2ktyzqaxyd4vl76ga47c9fhd6w4erv4cqrjafjl</strong></div>
+      </section>
+
+      <section class="panel">
+        <h2 data-i18n="infographicTitle">Infographic</h2>
+        <div class="infographic-stage" id="infoStage">
+          <div class="info-card active"><div class="number" data-i18n="whatWeStandFor">What We Stand For</div><h3 data-i18n="premiumMediaTitle">Premium Media</h3><p class="desc" data-i18n="premiumMediaDesc">Exclusive content, media access and digital community experiences in the Terra Classic ecosystem.</p></div>
+          <div class="info-card"><div class="number" data-i18n="whatWeStandFor">What We Stand For</div><h3 data-i18n="transparencyTitle">On-Chain Transparency</h3><p class="desc" data-i18n="transparencyDesc">Token data, owner share and pool supply are displayed live and transparently.</p></div>
+          <div class="info-card"><div class="number" data-i18n="roadmapLabel">Roadmap</div><h3 data-i18n="walletAccessTitle">Wallet Access</h3><p class="desc" data-i18n="walletAccessDesc">Holder check, balance recognition and future premium access for LCPIE holders.</p></div>
+          <div class="info-card"><div class="number" data-i18n="roadmapLabel">Roadmap</div><h3 data-i18n="expansionTitle">Expansion</h3><p class="desc" data-i18n="expansionDesc">More LUNC-oriented Web3 integrations, media projects and community campaigns.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2 data-i18n="useCasesTitle">Use Cases</h2>
+      <div class="use-grid">
+        <div class="use"><b>🎬</b><span data-i18n="usePremium">Premium Content</span></div>
+        <div class="use"><b>🔐</b><span data-i18n="useTokenAccess">Token Access</span></div>
+        <div class="use"><b>👥</b><span data-i18n="useCommunity">Community</span></div>
+        <div class="use"><b>🌕</b><span data-i18n="useLuncFocus">LUNC Focus</span></div>
+      </div>
+    </section>
+
+    <div class="bottom-grid">
+      <section class="panel"><h2 data-i18n="bottomTransparencyTitle">Transparency</h2><p class="desc" data-i18n="bottomTransparencyDesc">All token movements are publicly traceable on the Terra Classic blockchain.</p><div class="badges"><span class="badge">On-Chain</span><span class="badge">Transparent</span><span class="badge">CW20</span></div></section>
+      <section class="panel"><h2 data-i18n="securityTitle">Security</h2><p class="desc" data-i18n="securityDesc">LuncPrime focuses on clear communication, traceable data and long-term community alignment.</p><div class="badges"><span class="badge">Trust</span><span class="badge">Community</span><span class="badge">Utility</span></div></section>
+      <section class="panel">
+  <h2>Explore Terra Classic</h2>
+  <p class="desc">Du willst Terra Classic entdecken?</p>
+  <a href="https://terra-classic.io/" target="_blank" style="text-decoration:none;display:block;margin-top:12px">
+    <div style="display:flex;align-items:center;gap:12px;border:1px solid var(--gold2);padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(246,189,51,.15),rgba(255,255,255,.05));box-shadow:0 0 20px rgba(246,189,51,.25);cursor:pointer">
+      <img src="https://i.postimg.cc/G3GbRxxZ/Screenshot-20260317-192913-Chrome.png" style="width:48px;height:48px;border-radius:10px" />
+      <div>
+        <div style="font-weight:900;color:var(--gold2)">terra-classic.io</div>
+        
+      </div>
+    </div>
+  </a>
+</section>
+    </div>
+
+    <div class="footer" data-i18n="footerText">LuncPrime (LCPIE) — Premium Media on Terra Classic · No financial advice</div>
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const translations = {
+    en:{tagline:"Premium Media · Real Utility · Community Powered",intro:"LuncPrime (LCPIE) is the premium gateway for exclusive content, digital media projects and community experiences on the Terra Classic blockchain.",miniCommunity:"Community Focus",miniTransparent:"Transparent",miniMedia:"Media Utility",walletTitle:"Connect Wallet",walletDesc:"Connect your Terra Classic wallet and check your LuncPrime balance later.",walletButton:"Wallet Connect",statSymbol:"Token Symbol",statNetwork:"Network",statSupply:"Total Supply",statPool:"Pool Supply",ownerTitle:"Owner Share",ownerBalanceLabel:"Owner Balance",ownerGoalLabel:"Goal",tokenInfoTitle:"Token Information",tokenNameLabel:"Token Name",symbolLabel:"Symbol",networkLabel:"Network",standardLabel:"Standard",contractLabel:"Contract",infographicTitle:"Infographic",whatWeStandFor:"What We Stand For",premiumMediaTitle:"Premium Media",premiumMediaDesc:"Exclusive content, media access and digital community experiences in the Terra Classic ecosystem.",transparencyTitle:"On-Chain Transparency",transparencyDesc:"Token data, owner share and pool supply are displayed live and transparently.",roadmapLabel:"Roadmap",walletAccessTitle:"Wallet Access",walletAccessDesc:"Holder check, balance recognition and future premium access for LCPIE holders.",expansionTitle:"Expansion",expansionDesc:"More LUNC-oriented Web3 integrations, media projects and community campaigns.",useCasesTitle:"Use Cases",usePremium:"Premium Content",useTokenAccess:"Token Access",useCommunity:"Community",useLuncFocus:"LUNC Focus",bottomTransparencyTitle:"Transparency",bottomTransparencyDesc:"All token movements are publicly traceable on the Terra Classic blockchain.",securityTitle:"Security",securityDesc:"LuncPrime focuses on clear communication, traceable data and long-term community alignment.",linksTitle:"Official Links",linksDesc:"Website, X, Telegram and Discord can be connected here later.",footerText:"LuncPrime (LCPIE) — Premium Media on Terra Classic · No financial advice",connecting:"Connecting to Terra Classic...",live:"Live calculated from owner wallet and LCPIE total supply.",unavailable:"Live query currently unavailable. Fallback: Total Supply "},
+    de:{tagline:"Premium Media · Echte Utility · Community Powered",intro:"LuncPrime (LCPIE) ist der Premium-Zugang für exklusive Inhalte, digitale Medienprojekte und Community-Erlebnisse auf der Terra Classic Blockchain.",miniCommunity:"Community Fokus",miniTransparent:"Transparent",miniMedia:"Media Utility",walletTitle:"Wallet verbinden",walletDesc:"Verbinde deine Terra Classic Wallet und prüfe später deinen LuncPrime-Bestand.",walletButton:"Wallet Connect",statSymbol:"Token Symbol",statNetwork:"Netzwerk",statSupply:"Gesamtmenge",statPool:"Pool Supply",ownerTitle:"Owner Anteil",ownerBalanceLabel:"Owner Balance",ownerGoalLabel:"Ziel",tokenInfoTitle:"Token Information",tokenNameLabel:"Token Name",symbolLabel:"Symbol",networkLabel:"Netzwerk",standardLabel:"Standard",contractLabel:"Contract",infographicTitle:"Info Grafik",whatWeStandFor:"Wofür wir stehen",premiumMediaTitle:"Premium Media",premiumMediaDesc:"Exklusive Inhalte, Medienzugang und digitale Community-Erlebnisse im Terra Classic Ökosystem.",transparencyTitle:"On-Chain Transparenz",transparencyDesc:"Token-Daten, Owner-Anteil und Pool Supply werden live und nachvollziehbar dargestellt.",roadmapLabel:"Roadmap",walletAccessTitle:"Wallet Access",walletAccessDesc:"Holder Check, Balance-Erkennung und zukünftige Premium-Freischaltung für LCPIE Besitzer.",expansionTitle:"Expansion",expansionDesc:"Weitere LUNC-orientierte Web3-Integrationen, Medienprojekte und Community-Aktionen.",useCasesTitle:"Use Cases",usePremium:"Premium Inhalte",useTokenAccess:"Token Zugang",useCommunity:"Community",useLuncFocus:"LUNC Fokus",bottomTransparencyTitle:"Transparenz",bottomTransparencyDesc:"Alle Token-Bewegungen sind über die Terra Classic Blockchain öffentlich nachvollziehbar.",securityTitle:"Sicherheit",securityDesc:"LuncPrime setzt auf klare Kommunikation, nachvollziehbare Daten und eine langfristige Community-Ausrichtung.",linksTitle:"Offizielle Links",linksDesc:"Website, X, Telegram und Discord können hier später direkt verbunden werden.",footerText:"LuncPrime (LCPIE) — Premium Media auf Terra Classic · Keine Finanzberatung",connecting:"Verbinde mit Terra Classic...",live:"Live berechnet aus Owner Wallet und LCPIE Total Supply.",unavailable:"Live-Abfrage aktuell nicht erreichbar. Fallback: Total Supply "},
+    fr:{tagline:"Média Premium · Utilité Réelle · Communauté",intro:"LuncPrime (LCPIE) est la passerelle premium vers du contenu exclusif, des projets médias numériques et des expériences communautaires sur la blockchain Terra Classic.",miniCommunity:"Communauté",miniTransparent:"Transparent",miniMedia:"Utilité Média",walletTitle:"Connecter le wallet",walletDesc:"Connectez votre wallet Terra Classic et vérifiez ensuite votre solde LuncPrime.",walletButton:"Wallet Connect",statSymbol:"Symbole",statNetwork:"Réseau",statSupply:"Supply total",statPool:"Supply du pool",ownerTitle:"Part Owner",ownerBalanceLabel:"Balance Owner",ownerGoalLabel:"Objectif",tokenInfoTitle:"Informations Token",tokenNameLabel:"Nom du token",symbolLabel:"Symbole",networkLabel:"Réseau",standardLabel:"Standard",contractLabel:"Contrat",infographicTitle:"Infographie",whatWeStandFor:"Notre Vision",premiumMediaTitle:"Média Premium",premiumMediaDesc:"Contenu exclusif, accès média et expériences communautaires numériques dans l’écosystème Terra Classic.",transparencyTitle:"Transparence On-Chain",transparencyDesc:"Les données du token, la part owner et le supply du pool sont affichés en direct et de manière transparente.",roadmapLabel:"Roadmap",walletAccessTitle:"Accès Wallet",walletAccessDesc:"Vérification holder, reconnaissance du solde et futur accès premium pour les détenteurs LCPIE.",expansionTitle:"Expansion",expansionDesc:"Davantage d’intégrations Web3 orientées LUNC, de projets médias et d’actions communautaires.",useCasesTitle:"Cas d’utilisation",usePremium:"Contenu Premium",useTokenAccess:"Accès Token",useCommunity:"Communauté",useLuncFocus:"Focus LUNC",bottomTransparencyTitle:"Transparence",bottomTransparencyDesc:"Tous les mouvements du token sont traçables publiquement sur la blockchain Terra Classic.",securityTitle:"Sécurité",securityDesc:"LuncPrime mise sur une communication claire, des données traçables et une orientation communautaire à long terme.",linksTitle:"Liens officiels",linksDesc:"Website, X, Telegram et Discord pourront être connectés ici plus tard.",footerText:"LuncPrime (LCPIE) — Média Premium sur Terra Classic · Pas un conseil financier",connecting:"Connexion à Terra Classic...",live:"Calculé en direct depuis le wallet owner et le supply total LCPIE.",unavailable:"Requête live actuellement indisponible. Fallback : Supply total "},
+    es:{tagline:"Media Premium · Utilidad Real · Comunidad",intro:"LuncPrime (LCPIE) es la puerta premium para contenido exclusivo, proyectos de medios digitales y experiencias comunitarias en la blockchain Terra Classic.",miniCommunity:"Comunidad",miniTransparent:"Transparente",miniMedia:"Utilidad Media",walletTitle:"Conectar wallet",walletDesc:"Conecta tu wallet de Terra Classic y comprueba después tu balance de LuncPrime.",walletButton:"Wallet Connect",statSymbol:"Símbolo",statNetwork:"Red",statSupply:"Supply total",statPool:"Supply del pool",ownerTitle:"Parte Owner",ownerBalanceLabel:"Balance Owner",ownerGoalLabel:"Objetivo",tokenInfoTitle:"Información del Token",tokenNameLabel:"Nombre",symbolLabel:"Símbolo",networkLabel:"Red",standardLabel:"Estándar",contractLabel:"Contrato",infographicTitle:"Infografía",whatWeStandFor:"Qué Representamos",premiumMediaTitle:"Media Premium",premiumMediaDesc:"Contenido exclusivo, acceso media y experiencias comunitarias digitales en el ecosistema Terra Classic.",transparencyTitle:"Transparencia On-Chain",transparencyDesc:"Los datos del token, la parte owner y el supply del pool se muestran en vivo y de forma transparente.",roadmapLabel:"Roadmap",walletAccessTitle:"Acceso Wallet",walletAccessDesc:"Holder check, reconocimiento de balance y futuro acceso premium para holders de LCPIE.",expansionTitle:"Expansión",expansionDesc:"Más integraciones Web3 orientadas a LUNC, proyectos media y campañas comunitarias.",useCasesTitle:"Casos de Uso",usePremium:"Contenido Premium",useTokenAccess:"Acceso Token",useCommunity:"Comunidad",useLuncFocus:"Foco LUNC",bottomTransparencyTitle:"Transparencia",bottomTransparencyDesc:"Todos los movimientos del token son rastreables públicamente en la blockchain Terra Classic.",securityTitle:"Seguridad",securityDesc:"LuncPrime se centra en comunicación clara, datos rastreables y orientación comunitaria a largo plazo.",linksTitle:"Links oficiales",linksDesc:"Website, X, Telegram y Discord podrán conectarse aquí más adelante.",footerText:"LuncPrime (LCPIE) — Media Premium en Terra Classic · No es asesoramiento financiero",connecting:"Conectando a Terra Classic...",live:"Calculado en vivo desde la wallet owner y el supply total de LCPIE.",unavailable:"Consulta live no disponible actualmente. Fallback: Supply total "},
+    it:{tagline:"Media Premium · Utility Reale · Community",intro:"LuncPrime (LCPIE) è il gateway premium per contenuti esclusivi, progetti media digitali ed esperienze community sulla blockchain Terra Classic.",miniCommunity:"Community",miniTransparent:"Trasparente",miniMedia:"Utility Media",walletTitle:"Connetti wallet",walletDesc:"Connetti il tuo wallet Terra Classic e controlla in seguito il saldo LuncPrime.",walletButton:"Wallet Connect",statSymbol:"Simbolo",statNetwork:"Rete",statSupply:"Supply totale",statPool:"Supply pool",ownerTitle:"Quota Owner",ownerBalanceLabel:"Balance Owner",ownerGoalLabel:"Obiettivo",tokenInfoTitle:"Informazioni Token",tokenNameLabel:"Nome Token",symbolLabel:"Simbolo",networkLabel:"Rete",standardLabel:"Standard",contractLabel:"Contratto",infographicTitle:"Infografica",whatWeStandFor:"Cosa Rappresentiamo",premiumMediaTitle:"Media Premium",premiumMediaDesc:"Contenuti esclusivi, accesso media ed esperienze community digitali nell’ecosistema Terra Classic.",transparencyTitle:"Trasparenza On-Chain",transparencyDesc:"Dati token, quota owner e supply pool vengono mostrati live e in modo trasparente.",roadmapLabel:"Roadmap",walletAccessTitle:"Accesso Wallet",walletAccessDesc:"Holder check, riconoscimento balance e futuro accesso premium per holder LCPIE.",expansionTitle:"Espansione",expansionDesc:"Altre integrazioni Web3 orientate a LUNC, progetti media e campagne community.",useCasesTitle:"Use Case",usePremium:"Contenuti Premium",useTokenAccess:"Accesso Token",useCommunity:"Community",useLuncFocus:"Focus LUNC",bottomTransparencyTitle:"Trasparenza",bottomTransparencyDesc:"Tutti i movimenti del token sono tracciabili pubblicamente sulla blockchain Terra Classic.",securityTitle:"Sicurezza",securityDesc:"LuncPrime punta su comunicazione chiara, dati tracciabili e orientamento community a lungo termine.",linksTitle:"Link ufficiali",linksDesc:"Website, X, Telegram e Discord potranno essere collegati qui più avanti.",footerText:"LuncPrime (LCPIE) — Media Premium su Terra Classic · Nessuna consulenza finanziaria",connecting:"Connessione a Terra Classic...",live:"Calcolato live dal wallet owner e dal supply totale LCPIE.",unavailable:"Query live attualmente non disponibile. Fallback: Supply totale "}
+  };
+
+  let currentLang = "en";
+  const LCPIE_CONTRACT = "terra1lz6lnuk64hrcx8t2qgs2ktyzqaxyd4vl76ga47c9fhd6w4erv4cqrjafjl";
+  const OWNER_WALLET = "terra195ra2v8yx9zxzxcpxphz54e945m0lqks8awed7";
+  const POOL_WALLET = "terra1fv03h0r2ze2ukhp99audckt432tgqc7yszyxhvu7g3lxshuw8u0snrd55f";
+  const FIXED_TOTAL_SUPPLY_DISPLAY = "1,000,000 LCPIE";
+  const LCD_ENDPOINTS = ["https://terra-classic-lcd.publicnode.com","https://terra-classic-fcd.publicnode.com"];
+  const $ = (id) => document.getElementById(id);
+
+  function applyLanguage(lang){
+    currentLang = translations[lang] ? lang : "en";
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if(translations[currentLang][key]) el.textContent = translations[currentLang][key];
+    });
+    document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.lang === currentLang));
+    const status = $("ownerStatus");
+    if(status && status.dataset.status === "connecting") status.textContent = translations[currentLang].connecting;
+    if(status && status.dataset.status === "live") status.textContent = translations[currentLang].live;
+    if(status && status.dataset.status === "unavailable") status.textContent = translations[currentLang].unavailable + FIXED_TOTAL_SUPPLY_DISPLAY + ".";
+  }
+
+  function setText(id,value){const el=$(id);if(el)el.textContent=value}
+  function setWidth(id,value){const el=$(id);if(el)el.style.width=value}
+  function toBase64(obj){return btoa(JSON.stringify(obj))}
+  async function lcdSmartQuery(query){const encoded=toBase64(query);let lastError;for(const lcd of LCD_ENDPOINTS){try{const url=`${lcd}/cosmwasm/wasm/v1/contract/${LCPIE_CONTRACT}/smart/${encoded}`;const res=await fetch(url);if(!res.ok)throw new Error(`LCD error ${res.status}`);const json=await res.json();return json.data||json}catch(err){lastError=err}}throw lastError||new Error("No LCD connection")}
+  function formatToken(amount,decimals=6){const value=Number(amount)/Math.pow(10,decimals);if(!Number.isFinite(value))return"0 LCPIE";return value.toLocaleString(currentLang==="de"?"de-DE":"en-US",{maximumFractionDigits:2})+" LCPIE"}
+  function formatPercent(value){if(!Number.isFinite(value))return"--%";return value.toLocaleString(currentLang==="de"?"de-DE":"en-US",{maximumFractionDigits:2})+"%"}
+
+  async function updateOwnerShare(){
+    try{
+      const [balanceData,poolData,supplyData]=await Promise.all([lcdSmartQuery({balance:{address:OWNER_WALLET}}),lcdSmartQuery({balance:{address:POOL_WALLET}}),lcdSmartQuery({token_info:{}})]);
+      const balance=Number(balanceData&&balanceData.balance?balanceData.balance:0);
+      const poolBalance=Number(poolData&&poolData.balance?poolData.balance:0);
+      const totalSupply=Number(supplyData&&supplyData.total_supply?supplyData.total_supply:0);
+      const decimals=Number(supplyData&&supplyData.decimals!==undefined?supplyData.decimals:6);
+      const percent=totalSupply>0?(balance/totalSupply)*100:0;
+      const safePercent=Math.max(0,Math.min(percent,100));
+      setText("ownerPercent",formatPercent(percent));setWidth("ownerFill",safePercent+"%");setText("ownerBalance",formatToken(balance,decimals));setText("poolSupply",formatToken(poolBalance,decimals));
+      const status=$("ownerStatus");if(status){status.dataset.status="live";status.textContent=translations[currentLang].live}
+    }catch(err){
+      setText("ownerPercent","--%");setWidth("ownerFill","0%");setText("ownerBalance",currentLang==="en"?"Not loaded":"--");setText("poolSupply","--");
+      const status=$("ownerStatus");if(status){status.dataset.status="unavailable";status.textContent=translations[currentLang].unavailable+FIXED_TOTAL_SUPPLY_DISPLAY+"."}
+      console.error(err);
+    }
+  }
+  function rotateInfoCards(){const cards=Array.from(document.querySelectorAll(".info-card"));if(cards.length===0)return;let current=0;cards.forEach((card,index)=>card.classList.toggle("active",index===0));setInterval(()=>{cards[current].classList.remove("active");current=(current+1)%cards.length;cards[current].classList.add("active")},3200)}
+  function runDomTests(){const requiredIds=["poolSupply","ownerPercent","ownerFill","ownerBalance","ownerStatus","infoStage"];const missing=requiredIds.filter(id=>!$(id));if(missing.length){console.warn("DOM test: missing elements",missing)}else{console.info("DOM test passed: all live elements exist.")}}
+  document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".lang-btn").forEach(btn=>btn.addEventListener("click",()=>{applyLanguage(btn.dataset.lang);updateOwnerShare()}));applyLanguage("en");runDomTests();rotateInfoCards();updateOwnerShare();setInterval(updateOwnerShare,60000)});
+})();
+</script>
+</body>
+</html>
